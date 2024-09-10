@@ -11,3 +11,10 @@ def members(request):
 
 def courts(request):
   return render(request, "my_courts.html")
+
+def details(request, id):
+  mymember = Member.objects.get(id=id)
+  context = {
+    'mymember': mymember,
+  }
+  return render(request, "details.html", context)
