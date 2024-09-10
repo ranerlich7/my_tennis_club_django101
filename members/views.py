@@ -1,16 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from django.template import loader
+from members.models import Member
 
 def members(request):
-    template = loader.get_template('members_page.html')
-    return HttpResponse(template.render())
-
-def trainers(request):
-    return HttpResponse("These are my Trainers")
+  mymembers = Member.objects.all()
+  context = {
+    'mymembers': mymembers,
+    'name': 'RAN'
+  }
+  return render(request, "all_members.html", context)
 
 def courts(request):
-    return HttpResponse("These are my Courts")
-
-def main(request):
-    return HttpResponse("Welcome to my tennis club!")
+  return render(request, "my_courts.html")
