@@ -1,5 +1,5 @@
-from django.shortcuts import redirect, render
-from members.models import Court, Member
+from django.shortcuts import render
+from members.models import Member
 
 def members(request):
   mymembers = Member.objects.all()
@@ -17,17 +17,3 @@ def details(request, id):
   }
   return render(request, "details.html", context)
 
-
-def courts(request):
-  courts = Court.objects.all()
-  context = {
-    'courts': courts,
-  }
-  return render(request, "all_courts.html", context)
-
-
-def reserve(request, id):
-  court = Court.objects.get(id=id)
-  court.is_occupied = True
-  court.save()
-  return redirect('/courts/')

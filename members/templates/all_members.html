@@ -1,6 +1,7 @@
-<!DOCTYPE html>
-<html>
-<body>
+{% extends "master.html" %}
+{% block title %}Members Page{% endblock %}
+
+{% block content %}
 
 <h1>Members in {{ name }}'s club</h1> 
   
@@ -10,5 +11,4 @@
   {% endfor %}
 </ul>
 
-</body>
-</html>
+{% endblock %}
