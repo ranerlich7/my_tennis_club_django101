@@ -7,7 +7,10 @@
 <ul>
     {% for court in courts %}
       <li>
-        Court: {{ court.number }}. 
+        Court: {{ court.number }}.
+        {% for member in court.members.all %} 
+        {{ member.firstname }}
+        {% endfor %}
         <input type="checkbox" {% if court.is_occupied %}checked{% endif %} disabled>
         {% if court.is_occupied %}
           Time: {{ court.time_of_occupation|date:"H:i" }}
@@ -15,7 +18,7 @@
           Time: N/A
         {% endif %}
         {% if not court.is_occupied %}
-          <a href="#" onclick="document.getElementById('reserve-form-{{ court.id }}').style.display='block'">Reserve</a>
+        <a href="#" onclick="document.getElementById('reserve-form-{{ court.id }}').style.display='block'">Reserve</a>
           <form id="reserve-form-{{ court.id }}" action="{% url 'reserve' court.id %}" method="post">
             {% csrf_token %}
             <label for="member1">Member 1:</label>
@@ -24,7 +27,10 @@
             <input type="text" id="member2" name="member2" required><br>
             <input type="submit" value="Submit">
           </form>
-        {% endif %}
+        {% else %}
+        <a href="{% url 'release' court.id %}">Release</a>
+
+          {% endif %}
       </li>
     {% endfor %}
   </ul>

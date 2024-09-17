@@ -10,6 +10,15 @@ def courts(request):
   }
   return render(request, "all_courts.html", context)
 
+def release(request, id):
+    court = get_object_or_404(Court, id=id)
+    court.is_occupied = False
+    court.save()
+    members = court.members.all()
+    for member in members:
+        member.court = None
+        member.save()
+    return redirect('/courts/')
 
 
 def reserve(request, id):
