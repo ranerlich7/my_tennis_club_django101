@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Courts list in my club</h1>
+
+    <ul>
+      {% for x in courts %}
+      <li>
+        Court Number: {{ x.number }}. Is occupied: <input type="checkbox" {% if x.is_occupied%} checked="true" {% endif %} disabled />
+        Time of occupation: {% if x.time_occupied %} {{ x.time_occupied|time:"H:i" }} {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </body>
+</html>
