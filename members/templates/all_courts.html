@@ -3,7 +3,7 @@
 <body>
 
 <h1>Courts in my club</h1> 
-  
+
 <ul>
     {% for court in courts %}
       <li>
@@ -14,11 +14,20 @@
         {% else %}
           Time: N/A
         {% endif %}
-        <a href="reserve/{{ court.id }}">Reserve</a>
+        {% if not court.is_occupied %}
+          <a href="#" onclick="document.getElementById('reserve-form-{{ court.id }}').style.display='block'">Reserve</a>
+          <form id="reserve-form-{{ court.id }}" action="{% url 'reserve' court.id %}" method="post">
+            {% csrf_token %}
+            <label for="member1">Member 1:</label>
+            <input type="text" id="member1" name="member1" required><br>
+            <label for="member2">Member 2:</label>
+            <input type="text" id="member2" name="member2" required><br>
+            <input type="submit" value="Submit">
+          </form>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>
   
-
 </body>
 </html>
